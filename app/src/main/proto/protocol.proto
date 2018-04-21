@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package droidpuppet;
+
+option java_package = "org.breeswish.droidpuppet";
+option java_outer_classname = "ProtocolProtos";
+
+message Encoders {
+    repeated string name = 1;
+}
+
+message ClientGreeting {
+    uint32 widthInPortrait = 1;
+    uint32 heightInPortrait = 2;
+    uint32 systemSdkVersion = 3;
+    string systemReleaseVersion = 4;
+    string deviceName = 5;
+    map<string, Encoders> videoEncoders = 6;
+    string connectionToken = 7;
+}
+
+message StreamRequest {
+    uint32 videoWidthInPortrait = 1;
+    uint32 videoHeightInPortrait = 2;
+    string format = 3;
+    string encoder = 4;
+    uint32 frameRate = 5;
+    uint32 kBitRate = 6;
+}
+
+message VideoFrame {
+    uint64 timeUs = 1;
+    bytes data = 2;
+}
+
+message Frame {
+    enum FrameType {
+        VIDEO = 0;
+        STREAM_RESTART = 1;
+    }
+    FrameType type = 1;
+    oneof data {
+        VideoFrame video = 2;
+    }
+}
