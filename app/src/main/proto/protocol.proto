@@ -33,13 +33,21 @@ message VideoFrame {
     bytes data = 2;
 }
 
+message DecodedVideoFrame {
+    bytes data = 1;
+    uint32 width = 2;
+    uint32 height = 3;
+}
+
 message Frame {
     enum FrameType {
         VIDEO = 0;
         STREAM_RESTART = 1;
+        DECODED_VIDEO = 2;
     }
     FrameType type = 1;
     oneof data {
         VideoFrame video = 2;
+        DecodedVideoFrame decodedVideo = 3;
     }
 }
