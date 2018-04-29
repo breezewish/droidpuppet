@@ -89,22 +89,17 @@ class Connection(
     }
 
     fun writeVideoFrame(buffer: ByteBuffer, len: Int, presentationTimeUs: Long) {
-        val dataBuilder = ProtocolProtos.VideoFrame.newBuilder()
-        dataBuilder.data = ByteString.copyFrom(buffer, len)
-        dataBuilder.timeUs = presentationTimeUs
-
         val builder = ProtocolProtos.Frame.newBuilder()
-        builder.type = ProtocolProtos.Frame.FrameType.VIDEO
-        builder.video = dataBuilder.build()
+        builder.restart = false
+        builder.timeUs = presentationTimeUs
+        builder.data = ByteString.copyFrom(buffer, len)
 
         asyncWrite(builder.build())
     }
 
     fun writeStreamRestartFrame() {
         val builder = ProtocolProtos.Frame.newBuilder()
-        builder.type = ProtocolProtos.Frame.FrameType.STREAM_RESTART
-
-        Log.i(TAG, "Sending stream restart frame")
+        builder.restart = true
 
         asyncWrite(builder.build())
     }

@@ -31,9 +31,9 @@ General flows:
 
 4. Application continuously send `Frame` packet:
 
-   - `type == VIDEO`: A single video frame of screen content.
+   - `restart == false`: A single encoded video frame of screen content. `width` and `height` is unspecified.
 
-   - `type == STREAM_RESTART`: The screen orientation is changed and the `Frame` packet follows will belong to a new video stream. Normally you will expect a width / height change.
+   - `restart == true`: The screen orientation is changed and future `Frame` packet will belong to a new video stream. Normally you will expect a width / height change. Other fields in this packet is unspecified.
 
 ## Develop
 
