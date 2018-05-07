@@ -29,9 +29,7 @@ message StreamRequest {
 }
 
 message Frame {
-    bool restart = 1;   // whether this is a restart frame
-    uint32 width = 2;   // only exists for decoded frame
-    uint32 height = 3;  // only exists for decoded frame
-    uint64 timeUs = 4;  // only exists for video frame
-    bytes data = 5;     // exists for decoded frame and video frame
+    bool restart = 1;   // whether this is a restart frame.
+    uint64 timeUs = 2;
+    bytes data = 3;
 }
